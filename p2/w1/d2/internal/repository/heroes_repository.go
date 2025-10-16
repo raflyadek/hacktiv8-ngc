@@ -3,6 +3,7 @@ package repository
 import (
 	"database/sql"
 	"p2/w1/d2/internal/entity"
+	"fmt"
 )
 
 type HeroesRepository interface {
@@ -18,11 +19,16 @@ func NewHeroesRepository(db *sql.DB) HeroesRepository {
 }
 
 func (h *heroRepo) GetAllHeroes() ([]entity.Heroes, error) {
-	rows, err := h.db.Query("SELECT id, name, universe, skill, imageurl FROM heroes")
+		fmt.Println(">>> about to run heroes query")
+
+	rows, err := h.db.Query(`SELECT id, name, universe, skill, imageurl FROM heroes`)
 	if err != nil {
 		return nil, err
 	}
-	defer rows.Close()
+
+		fmt.Println(">>> query executed, scanning rows")
+
+	// defer rows.Close()
 
 	var heroes []entity.Heroes
 	for rows.Next() {
@@ -32,5 +38,7 @@ func (h *heroRepo) GetAllHeroes() ([]entity.Heroes, error) {
 		}
 		heroes = append(heroes, h)
 	}
+		fmt.Println(">>> finished scanning")
+
 	return heroes, nil
 }
