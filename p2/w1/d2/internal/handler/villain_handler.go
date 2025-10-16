@@ -2,10 +2,10 @@ package handler
 
 import (
 	"encoding/json"
-	
+	"log"
+	"fmt"
 	"net/http"
 	"p2/w1/d2/internal/repository"
-	"fmt"
 )
 
 type VillainHandler struct {
@@ -17,16 +17,15 @@ func NewVillainHandler(repo repository.VillainRepository) *VillainHandler {
 }
 
 func (v *VillainHandler) GetAllVillain(w http.ResponseWriter, r *http.Request) {
-	fmt.Println(">>> /villain handler reached")
-
 	villain, err := v.repo.GetAllVillain()
 	if err != nil {
-		fmt.Print("Error fetching villain", err)
+		log.Print("Error fetching villain", err)
 		http.Error(w, "Failed to fetch villain database", http.StatusInternalServerError)
 		return
 	}
 	fmt.Println("Fetched villains:", villain)
 
 	w.Header().Set("Content-Type", "application/json")
+	log.Println("Fetched villain:", villain)
 	json.NewEncoder(w).Encode(villain)
 }

@@ -1,6 +1,7 @@
 package main
 
 import (
+	"fmt"
 	"log"
 	"net/http"
 	"p2/w1/d2/config"
@@ -28,8 +29,13 @@ func main () {
 	http.HandleFunc("/heroes", heroHandler.GetAllHeroes)
 	http.HandleFunc("/villain", villainHandler.GetAllVillain)
 
-	er := config.ConnectServer()
-	if er != nil {
-		log.Fatal("Error conect to server", er)
+	// er := config.ConnectServer()
+	// if er != nil {
+	// 	log.Print("Error conect to server", er)
+	// }
+	log.Print("Server started at port :8000")
+	if err := http.ListenAndServe(":8000", nil); err != nil {
+		fmt.Println(err.Error())
 	}
+
 }

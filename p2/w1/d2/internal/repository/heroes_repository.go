@@ -19,16 +19,13 @@ func NewHeroesRepository(db *sql.DB) HeroesRepository {
 }
 
 func (h *heroRepo) GetAllHeroes() ([]entity.Heroes, error) {
-		fmt.Println(">>> about to run heroes query")
-
 	rows, err := h.db.Query(`SELECT id, name, universe, skill, imageurl FROM heroes`)
 	if err != nil {
+		fmt.Println("error", err)
 		return nil, err
 	}
 
-		fmt.Println(">>> query executed, scanning rows")
-
-	// defer rows.Close()
+	defer rows.Close()
 
 	var heroes []entity.Heroes
 	for rows.Next() {
@@ -38,7 +35,5 @@ func (h *heroRepo) GetAllHeroes() ([]entity.Heroes, error) {
 		}
 		heroes = append(heroes, h)
 	}
-		fmt.Println(">>> finished scanning")
-
 	return heroes, nil
 }

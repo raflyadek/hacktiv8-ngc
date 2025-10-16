@@ -22,7 +22,7 @@ func (v *villainRepo) GetAllVillain() ([]entity.Villain, error) {
 	if err != nil {
 		return nil, err
 	}
-	// defer rows.Close()
+	defer rows.Close()
 
 	var villain []entity.Villain
 	for rows.Next() {

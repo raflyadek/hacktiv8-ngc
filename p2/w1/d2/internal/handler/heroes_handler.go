@@ -5,7 +5,6 @@ import (
 	"log"
 	"net/http"
 	"p2/w1/d2/internal/repository"
-	"fmt"
 )
 
 type HeroHandler struct {
@@ -25,6 +24,6 @@ func (h *HeroHandler) GetAllHeroes(w http.ResponseWriter, r *http.Request) {
 	}
 
 	w.Header().Set("Content-Type", "application/json")
-	fmt.Println("Fetched villains:", heroes)
+	log.Println("Fetched heroes:", heroes)
 	json.NewEncoder(w).Encode(heroes)
 }
